@@ -34,6 +34,8 @@ management:
         include: health,info,metrics
 
 # Student Service URL
+# LOCAL: http://localhost:8081
+# KUBERNETES: http://student-service.default.svc.cluster.local:8081
 student:
   service:
-    url: http://localhost:8081
+    url: ${STUDENT_SERVICE_URL:http://localhost:8081}

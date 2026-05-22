@@ -1,0 +1,55 @@
+replicaCount: 1
+
+image:
+  repository: 334044476918.dkr.ecr.us-east-1.amazonaws.com/devops-portfolio/enrollment-service
+  pullPolicy: IfNotPresent
+  tag: "latest"
+
+serviceAccount:
+  create: true
+  automount: true
+  annotations: {}
+  name: "enrollment-service"
+
+service:
+  type: ClusterIP
+  port: 8082
+  targetPort: 8082
+
+ingress:
+  enabled: false
+
+resources:
+  requests:
+    memory: "256Mi"
+    cpu: "100m"
+  limits:
+    memory: "512Mi"
+    cpu: "300m"
+
+livenessProbe:
+  httpGet:
+    path: /actuator/health
+    port: 8082
+  initialDelaySeconds: 60
+  periodSeconds: 30
+  failureThreshold: 3
+
+readinessProbe:
+  httpGet:
+    path: /actuator/health
+    port: 8082
+  initialDelaySeconds: 30
+  periodSeconds: 10
+  failureThreshold: 3
+
+autoscaling:
+  enabled: false
+  minReplicas: 1
+  maxReplicas: 3
+  targetCPUUtilizationPercentage: 70
+
+env:
+  SPRING_PROFILES_ACTIVE: "dev"
+  JAVA_OPTS: "-XX:+UseContainerSupport -XX:MaxRAMPercentage=75.0"
+  STUDENT_SERVICE_URL: "http://student-service:8081"
