@@ -145,6 +145,9 @@ jobs:
       - name: Debug Pod Status
         if: always()
         run: |
+          aws eks update-kubeconfig \
+            --name devops-portfolio-dev \
+            --region ${{ secrets.AWS_REGION }}
           echo "=== Pods ==="
           kubectl get pods -n dev
           echo "=== Events ==="
@@ -154,5 +157,8 @@ jobs:
 
       - name: Verify Deployment
         run: |
+          aws eks update-kubeconfig \
+            --name devops-portfolio-dev \
+            --region ${{ secrets.AWS_REGION }}
           kubectl get pods -n dev
           echo "✅ Enrollment-Service Deployed Successfully!"
