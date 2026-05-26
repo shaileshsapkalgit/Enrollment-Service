@@ -1,4 +1,4 @@
-replicaCount: 1
+replicaCount: 2
 
 image:
   repository: 334044476918.dkr.ecr.us-east-1.amazonaws.com/devops-portfolio/enrollment-service
@@ -12,7 +12,7 @@ serviceAccount:
   name: "enrollment-service"
 
 service:
-  type: ClusterIP
+  type: LoadBalancer
   port: 8082
   targetPort: 8082
 
@@ -24,7 +24,7 @@ resources:
     memory: "256Mi"
     cpu: "100m"
   limits:
-    memory: "512Mi"
+    memory: "768Mi"
     cpu: "300m"
 
 livenessProbe:
@@ -44,10 +44,11 @@ readinessProbe:
   failureThreshold: 3
 
 autoscaling:
-  enabled: false
-  minReplicas: 1
-  maxReplicas: 3
+  enabled: true
+  minReplicas: 2
+  maxReplicas: 4
   targetCPUUtilizationPercentage: 70
+  targetMemoryUtilizationPercentage: 90
 
 env:
   SPRING_PROFILES_ACTIVE: "dev"
