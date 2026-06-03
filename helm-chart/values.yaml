@@ -1,7 +1,7 @@
 replicaCount: 2
 
 image:
-  repository: 334044476918.dkr.ecr.us-east-1.amazonaws.com/devops-portfolio/enrollment-service
+  repository: 836095228526.dkr.ecr.us-east-1.amazonaws.com/devops-portfolio/enrollment-service
   pullPolicy: IfNotPresent
   tag: "latest"
 
@@ -9,7 +9,7 @@ serviceAccount:
   create: true
   automount: true
   annotations:
-    eks.amazonaws.com/role-arn: arn:aws:iam::334044476918:role/devops-portfolio-dev-enrollment-service-irsa
+    eks.amazonaws.com/role-arn: arn:aws:iam::836095228526:role/devops-portfolio-dev-enrollment-service-irsa
   name: "enrollment-service"
 
 service:
@@ -18,7 +18,16 @@ service:
   targetPort: 8082
 
 ingress:
-  enabled: false
+  enabled: true
+  className: nginx
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /$2
+  hosts:
+    - host: ""
+      paths:
+        - path: /enrollment(/|$)(.*)
+          pathType: Prefix
+  tls: []
 
 resources:
   requests:
