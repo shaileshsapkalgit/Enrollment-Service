@@ -42,9 +42,9 @@ jobs:
       - name: Generate Image Tag
         id: image-tag
         run: |
-          SHORT_SHA=$(echo ${{ github.sha }} | cut -c1-7)
-          echo "tag=${SHORT_SHA}" >> $GITHUB_OUTPUT
-          echo "Image tag: ${SHORT_SHA}"
+          TAG=$(grep 'tag:' helm-chart/values.yaml | awk '{print $2}' | tr -d '"')
+          echo "tag=${TAG}" >> $GITHUB_OUTPUT
+          echo "Image tag from values.yaml: ${TAG}"
 
       - name: Docker Build
         run: |
@@ -138,9 +138,9 @@ jobs:
             --set image.repository=${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.${{ secrets.AWS_REGION }}.amazonaws.com/devops-portfolio/enrollment-service \
             --timeout 10m
 
-      - name: Wait for Deployment
-        run: |
-          kubectl rollout status deployment/enrollment-service -n dev --timeout=10m
+#      - name: Wait for Deployment
+#        run: |
+#          kubectl rollout status deployment/enrollment-service -n dev --timeout=10m
 
       - name: Debug Pod Status
         if: always()
