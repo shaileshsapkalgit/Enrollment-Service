@@ -27,3 +27,4 @@ spec:
       {{ toYaml .Values.prometheusOperator.networkPolicy.matchLabels | nindent 6 }}
       {{- end }}
 {{- end }}
+

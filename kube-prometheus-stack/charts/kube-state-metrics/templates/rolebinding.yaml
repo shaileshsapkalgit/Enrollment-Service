@@ -22,3 +22,4 @@ subjects:
   namespace: {{ template "kube-state-metrics.namespace" $ }}
 {{- end -}}
 {{- end -}}
+

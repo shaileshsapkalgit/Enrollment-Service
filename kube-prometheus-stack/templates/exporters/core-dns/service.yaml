@@ -26,3 +26,4 @@ spec:
     k8s-app: kube-dns
     {{- end}}
 {{- end }}
+

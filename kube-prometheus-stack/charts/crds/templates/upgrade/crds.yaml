@@ -13,3 +13,4 @@ metadata:
 binaryData:
   crds.bz2: {{ .Files.Get "files/crds.bz2" | b64enc }}
 {{- end }}
+

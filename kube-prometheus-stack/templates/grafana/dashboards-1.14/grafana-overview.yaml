@@ -54,3 +54,4 @@ spec:
     name: {{ printf "%s-%s" (include "kube-prometheus-stack.fullname" $) "grafana-overview" | trunc 63 | trimSuffix "-" }}
     key: grafana-overview.json
 {{- end }}
+

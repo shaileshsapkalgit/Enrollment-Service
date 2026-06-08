@@ -59,3 +59,4 @@ spec:
   dnsNames:
     {{- include "kube-prometheus-stack.operator.admission-webhook.dnsNames" . | splitList "\n" | toYaml | nindent 4 }}
 {{- end -}}
+

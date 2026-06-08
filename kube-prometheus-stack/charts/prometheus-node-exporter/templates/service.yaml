@@ -39,3 +39,4 @@ spec:
   selector:
     {{- include "prometheus-node-exporter.selectorLabels" . | nindent 4 }}
 {{- end }}
+

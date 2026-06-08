@@ -54,3 +54,4 @@ spec:
     name: {{ printf "%s-%s" (include "kube-prometheus-stack.fullname" $) "nodes-darwin" | trunc 63 | trimSuffix "-" }}
     key: nodes-darwin.json
 {{- end }}
+

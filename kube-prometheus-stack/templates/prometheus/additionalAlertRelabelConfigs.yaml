@@ -14,3 +14,4 @@ metadata:
 data:
   additional-alert-relabel-configs.yaml: {{ tpl (toYaml .Values.prometheus.prometheusSpec.additionalAlertRelabelConfigs) . | b64enc | quote }}
 {{- end }}
+

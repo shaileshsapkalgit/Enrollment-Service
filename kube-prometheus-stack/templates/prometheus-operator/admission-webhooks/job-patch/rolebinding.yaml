@@ -19,3 +19,4 @@ subjects:
     name: {{ template "kube-prometheus-stack.fullname" . }}-admission
     namespace: {{ template "kube-prometheus-stack.namespace" . }}
 {{- end }}
+

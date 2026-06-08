@@ -16,3 +16,4 @@ subjects:
     namespace: {{ template "kube-prometheus-stack.namespace" . }}
 {{- end }}
 
+

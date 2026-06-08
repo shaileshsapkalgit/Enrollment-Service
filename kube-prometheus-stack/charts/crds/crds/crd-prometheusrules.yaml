@@ -265,3 +265,4 @@ spec:
     storage: true
     subresources:
       status: {}
+

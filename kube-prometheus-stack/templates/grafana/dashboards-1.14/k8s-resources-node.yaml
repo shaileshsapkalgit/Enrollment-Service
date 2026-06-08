@@ -54,3 +54,4 @@ spec:
     name: {{ printf "%s-%s" (include "kube-prometheus-stack.fullname" $) "k8s-resources-node" | trunc 63 | trimSuffix "-" }}
     key: k8s-resources-node.json
 {{- end }}
+

@@ -27,3 +27,4 @@ rules:
   resources: ["alertmanagers", "alertmanagerconfigs", "podmonitors",  "probes", "prometheuses", "prometheusagents", "prometheusrules", "scrapeconfigs", "servicemonitors"]
   verbs: ["get", "list", "watch", "create", "update", "patch", "delete"]
 {{- end }}
+

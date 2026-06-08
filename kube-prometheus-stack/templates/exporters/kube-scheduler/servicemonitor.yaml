@@ -61,3 +61,4 @@ spec:
 {{ tpl (toYaml .Values.kubeScheduler.serviceMonitor.relabelings | indent 4) . }}
 {{- end }}
 {{- end }}
+

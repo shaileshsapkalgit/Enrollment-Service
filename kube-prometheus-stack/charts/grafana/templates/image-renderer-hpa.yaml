@@ -44,3 +44,4 @@ spec:
   behavior: {{ toYaml .Values.imageRenderer.autoscaling.behavior | nindent 4 }}
   {{- end }}
 {{- end }}
+

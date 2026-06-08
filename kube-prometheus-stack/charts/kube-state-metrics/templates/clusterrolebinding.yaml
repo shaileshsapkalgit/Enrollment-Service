@@ -18,3 +18,4 @@ subjects:
   name: {{ template "kube-state-metrics.serviceAccountName" . }}
   namespace: {{ template "kube-state-metrics.namespace" . }}
 {{- end -}}
+

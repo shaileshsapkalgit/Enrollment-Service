@@ -20,3 +20,4 @@ data:
         subresource: {{ template "kube-state-metrics.fullname" . }}
         name: {{ template "kube-state-metrics.fullname" . }}
 {{- end }}
+

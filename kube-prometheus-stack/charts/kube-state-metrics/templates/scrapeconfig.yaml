@@ -58,3 +58,4 @@ spec:
     {{- toYaml (.Values.prometheus.scrapeconfig.tlsConfig ) | nindent 4 }}
 {{- end }}
 {{- end }}
+

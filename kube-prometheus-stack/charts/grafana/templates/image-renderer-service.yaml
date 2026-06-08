@@ -29,3 +29,4 @@ spec:
   selector:
     {{- include "grafana.imageRenderer.selectorLabels" . | nindent 4 }}
 {{- end }}
+

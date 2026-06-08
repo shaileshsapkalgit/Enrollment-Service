@@ -27,3 +27,4 @@ sources:
 - https://github.com/prometheus/node_exporter/
 type: application
 version: 4.55.0
+

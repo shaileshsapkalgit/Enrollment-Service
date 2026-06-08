@@ -13,3 +13,4 @@ metadata:
 data:
   {{- include "grafana.configDashboardProviderData" . | nindent 2 }}
 {{- end }}
+

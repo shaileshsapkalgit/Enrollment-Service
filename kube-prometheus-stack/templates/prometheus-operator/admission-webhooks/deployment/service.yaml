@@ -60,3 +60,4 @@ spec:
     release: {{ $.Release.Name | quote }}
   type: "{{ .Values.prometheusOperator.admissionWebhooks.deployment.service.type }}"
 {{- end }}
+

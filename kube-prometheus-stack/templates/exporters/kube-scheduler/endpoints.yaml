@@ -20,3 +20,4 @@ subsets:
         port: {{ include "kube-prometheus-stack.kubeScheduler.insecureScrape" (list . $kubeSchedulerDefaultInsecurePort $kubeSchedulerDefaultSecurePort .Values.kubeScheduler.service.port)  }}
         protocol: TCP
 {{- end }}
+

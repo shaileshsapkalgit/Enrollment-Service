@@ -57,3 +57,4 @@ spec:
 {{ tpl (toYaml .Values.kubeProxy.serviceMonitor.relabelings | indent 4) . }}
 {{- end }}
 {{- end }}
+

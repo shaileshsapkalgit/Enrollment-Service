@@ -18,3 +18,4 @@ data:
   additional-scrape-configs.yaml: {{ tpl (toYaml .Values.prometheus.prometheusSpec.additionalScrapeConfigs) $ | b64enc | quote }}
 {{- end }}
 {{- end }}
+

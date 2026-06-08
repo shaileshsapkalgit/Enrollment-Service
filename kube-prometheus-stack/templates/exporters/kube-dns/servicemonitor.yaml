@@ -67,3 +67,4 @@ spec:
 {{ tpl (toYaml .Values.kubeDns.serviceMonitor.relabelings | indent 4) . }}
 {{- end }}
 {{- end }}
+

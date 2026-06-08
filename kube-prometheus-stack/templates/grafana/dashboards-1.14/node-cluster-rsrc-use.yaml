@@ -54,3 +54,4 @@ spec:
     name: {{ printf "%s-%s" (include "kube-prometheus-stack.fullname" $) "node-cluster-rsrc-use" | trunc 63 | trimSuffix "-" }}
     key: node-cluster-rsrc-use.json
 {{- end }}
+

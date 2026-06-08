@@ -14,3 +14,4 @@ subjects:
   name: {{ template "kube-prometheus-stack.operator.serviceAccountName" . }}
   namespace: {{ template "kube-prometheus-stack.namespace" . }}
 {{- end }}
+

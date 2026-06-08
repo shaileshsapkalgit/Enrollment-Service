@@ -87,3 +87,4 @@ spec:
 {{- end }}
   type: "{{ .Values.prometheus.service.type }}"
 {{- end }}
+

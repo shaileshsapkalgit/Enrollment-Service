@@ -59,3 +59,4 @@ spec:
     release: {{ $.Release.Name | quote }}
   type: "{{ .Values.prometheusOperator.service.type }}"
 {{- end }}
+

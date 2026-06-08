@@ -14,3 +14,4 @@ data:
   {{ .Values.customResourceState.key }}: |
     {{- toYaml .Values.customResourceState.config | nindent 4 }}
 {{- end }}
+

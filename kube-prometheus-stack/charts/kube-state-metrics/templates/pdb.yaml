@@ -12,3 +12,4 @@ spec:
       app.kubernetes.io/name: {{ template "kube-state-metrics.name" . }}
 {{ toYaml .Values.podDisruptionBudget | indent 2 }}
 {{- end -}}
+

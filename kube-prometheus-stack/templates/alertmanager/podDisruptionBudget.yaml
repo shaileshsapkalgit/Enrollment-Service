@@ -14,3 +14,4 @@ spec:
       app.kubernetes.io/name: alertmanager
       alertmanager: {{ template "kube-prometheus-stack.alertmanager.crname" . }}
 {{- end }}
+

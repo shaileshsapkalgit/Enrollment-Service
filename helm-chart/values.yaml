@@ -1,15 +1,15 @@
 replicaCount: 2
 
 image:
-  repository: 836095228526.dkr.ecr.us-east-1.amazonaws.com/devops-portfolio/enrollment-service
+  repository: 361697161922.dkr.ecr.us-east-1.amazonaws.com/devops-portfolio/enrollment-service
   pullPolicy: IfNotPresent
-  tag: "1.0.4"
+  tag: "latest"
 
 serviceAccount:
   create: true
   automount: true
   annotations:
-    eks.amazonaws.com/role-arn: arn:aws:iam::836095228526:role/devops-portfolio-dev-enrollment-service-irsa
+    eks.amazonaws.com/role-arn: arn:aws:iam::361697161922:role/devops-portfolio-dev-enrollment-service-irsa
   name: "enrollment-service"
 
 service:

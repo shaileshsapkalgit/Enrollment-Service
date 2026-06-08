@@ -45,3 +45,4 @@ spec:
     matchNames:
       - {{ printf "%s" (include "kube-prometheus-stack.namespace" .) | quote }}
 {{- end }}
+

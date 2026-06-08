@@ -51,3 +51,4 @@ spec:
 {{- end }}
   selector:
     {{- include "kube-state-metrics.selectorLabels" . | indent 4 }}
+

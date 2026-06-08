@@ -71,3 +71,4 @@ spec:
   selector:
     {{- include "grafana.selectorLabels" . | nindent 4 }}
 {{- end }}
+

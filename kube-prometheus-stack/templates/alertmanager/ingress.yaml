@@ -65,3 +65,4 @@ spec:
 {{ tpl (toYaml .Values.alertmanager.ingress.tls | indent 4) . }}
   {{- end -}}
 {{- end -}}
+

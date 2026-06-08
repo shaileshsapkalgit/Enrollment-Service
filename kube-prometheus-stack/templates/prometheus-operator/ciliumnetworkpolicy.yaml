@@ -38,3 +38,4 @@ spec:
           path: "/metrics"
       {{- end }}
 {{- end }}
+

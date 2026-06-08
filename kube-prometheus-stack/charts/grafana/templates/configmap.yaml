@@ -18,3 +18,4 @@ metadata:
 data:
   {{- include "grafana.configData" . | nindent 2 }}
 {{- end }}
+

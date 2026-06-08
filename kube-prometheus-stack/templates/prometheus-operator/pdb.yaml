@@ -13,3 +13,4 @@ spec:
       release: {{ $.Release.Name | quote }}
 {{- toYaml (omit .Values.prometheusOperator.podDisruptionBudget "enabled") | nindent 2 }}
 {{- end }}
+

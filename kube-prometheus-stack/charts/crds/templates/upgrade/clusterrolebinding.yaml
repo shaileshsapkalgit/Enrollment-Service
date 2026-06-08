@@ -19,3 +19,4 @@ roleRef:
   name: {{ template "kube-prometheus-stack.crd.upgradeJob.name" . }}
   apiGroup: rbac.authorization.k8s.io
 {{- end }}
+

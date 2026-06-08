@@ -54,3 +54,4 @@ spec:
     name: {{ printf "%s-%s" (include "kube-prometheus-stack.fullname" $) "prometheus-remote-write" | trunc 63 | trimSuffix "-" }}
     key: prometheus-remote-write.json
 {{- end }}
+

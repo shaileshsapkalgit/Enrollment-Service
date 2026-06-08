@@ -55,3 +55,4 @@ spec:
     name: {{ printf "%s-%s" (include "kube-prometheus-stack.fullname" $) "scheduler" | trunc 63 | trimSuffix "-" }}
     key: scheduler.json
 {{- end }}
+

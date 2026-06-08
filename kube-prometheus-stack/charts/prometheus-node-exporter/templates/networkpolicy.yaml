@@ -25,3 +25,4 @@ spec:
     matchLabels:
       {{- include "prometheus-node-exporter.selectorLabels" . | nindent 6 }}
 {{- end }}
+

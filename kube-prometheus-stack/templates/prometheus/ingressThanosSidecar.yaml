@@ -57,3 +57,4 @@ spec:
 {{ tpl (toYaml .Values.prometheus.thanosIngress.tls | indent 4) . }}
   {{- end -}}
 {{- end -}}
+

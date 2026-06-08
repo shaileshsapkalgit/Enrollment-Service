@@ -46,3 +46,4 @@ rules:
 {{ toYaml .Values.prometheus.additionalRulesForClusterRole | indent 0 }}
 {{- end }}
 {{- end }}
+

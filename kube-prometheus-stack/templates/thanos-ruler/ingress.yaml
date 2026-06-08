@@ -57,3 +57,4 @@ spec:
 {{ tpl (toYaml .Values.thanosRuler.ingress.tls | indent 4) . }}
   {{- end -}}
 {{- end -}}
+

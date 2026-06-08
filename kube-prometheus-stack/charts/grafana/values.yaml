@@ -1777,3 +1777,4 @@ verticalPodAutoscaler:
   maxAllowed:
     cpu: "1000m"
     memory: "1Gi"
+

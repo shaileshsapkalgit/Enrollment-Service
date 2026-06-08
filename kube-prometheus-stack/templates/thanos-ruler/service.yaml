@@ -55,3 +55,4 @@ spec:
     thanos-ruler: {{ template "kube-prometheus-stack.thanosRuler.crname" . }}
   type: "{{ .Values.thanosRuler.service.type }}"
 {{- end }}
+

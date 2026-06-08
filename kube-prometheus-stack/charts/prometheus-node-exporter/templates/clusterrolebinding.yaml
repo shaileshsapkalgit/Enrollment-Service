@@ -18,3 +18,4 @@ subjects:
   name: {{ template "prometheus-node-exporter.serviceAccountName" . }}
   namespace: {{ template "prometheus-node-exporter.namespace" . }}
 {{- end -}}
+

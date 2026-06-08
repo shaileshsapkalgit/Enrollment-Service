@@ -26,3 +26,4 @@ rules:
       - {{ ($.Files.Get $path | fromYaml ).metadata.name }}
       {{- end }}
 {{- end }}
+

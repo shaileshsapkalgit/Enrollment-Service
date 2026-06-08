@@ -55,3 +55,4 @@ spec:
     name: {{ printf "%s-%s" (include "kube-prometheus-stack.fullname" $) "pod-total" | trunc 63 | trimSuffix "-" }}
     key: pod-total.json
 {{- end }}
+

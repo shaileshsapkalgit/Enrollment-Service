@@ -59,3 +59,4 @@ spec:
             pathType: {{ $ingressPathType }}
   {{- end -}}
 {{- end }}
+

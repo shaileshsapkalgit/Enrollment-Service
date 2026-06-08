@@ -43,3 +43,4 @@ spec:
 {{ toYaml .Values.prometheus.thanosServiceMonitor.relabelings | indent 6 }}
 {{- end }}
 {{- end }}
+

@@ -18,3 +18,4 @@ subsets:
         port: {{ .Values.kubeProxy.service.port }}
         protocol: TCP
 {{- end }}
+

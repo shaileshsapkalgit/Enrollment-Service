@@ -26,3 +26,4 @@ subjects:
   namespace: {{ include "grafana.namespace" $ }}
 {{- end }}
 {{- end }}
+

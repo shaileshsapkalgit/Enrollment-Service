@@ -14,3 +14,4 @@ metadata:
 data:
   additional-alertmanager-configs.yaml: {{ tpl (toYaml .Values.prometheus.prometheusSpec.additionalAlertManagerConfigs) . | b64enc | quote }}
 {{- end }}
+

@@ -17,3 +17,4 @@ sources:
 - https://github.com/prometheus-community/windows_exporter/
 type: application
 version: 0.12.7
+

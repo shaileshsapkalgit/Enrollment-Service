@@ -24,3 +24,4 @@ spec:
     {{ toYaml .Values.prometheus.networkPolicy.cilium.ingress | nindent 4 }}
   {{- end }}
 {{- end }}
+

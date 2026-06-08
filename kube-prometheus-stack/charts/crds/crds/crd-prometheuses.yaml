@@ -13718,3 +13718,4 @@ spec:
         specReplicasPath: .spec.shards
         statusReplicasPath: .status.shards
       status: {}
+

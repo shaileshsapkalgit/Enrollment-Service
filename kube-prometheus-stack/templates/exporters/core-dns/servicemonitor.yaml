@@ -52,3 +52,4 @@ spec:
 {{ tpl (toYaml .Values.coreDns.serviceMonitor.relabelings | indent 4) . }}
 {{- end }}
 {{- end }}
+

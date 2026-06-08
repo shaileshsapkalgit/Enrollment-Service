@@ -22,3 +22,4 @@ spec:
       name: {{ .Values.service.portName }}
   selector:
     {{- include "prometheus-windows-exporter.selectorLabels" . | nindent 4 }}
+
