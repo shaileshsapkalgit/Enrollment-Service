@@ -81,11 +81,13 @@ jobs:
 
       # ─── Step 7 ───
       - name: Docker Build
+        if: github.ref_type == 'tag'
         run: |
           docker build -t enrollment-service:${{ steps.image-tag.outputs.tag }} .
 
       # ─── Step 8 ───
       - name: Trivy Security Scan
+        if: github.ref_type == 'tag'
         uses: aquasecurity/trivy-action@master
         with:
           image-ref: enrollment-service:${{ steps.image-tag.outputs.tag }}
@@ -95,7 +97,7 @@ jobs:
 
       # ─── Step 9 ───
       - name: Configure AWS credentials (OIDC)
-        if: github.event_name != 'pull_request'
+        if: github.ref_type == 'tag'
         uses: aws-actions/configure-aws-credentials@v4
         with:
           role-to-assume: ${{ secrets.AWS_ROLE_ARN }}
@@ -103,13 +105,13 @@ jobs:
 
       # ─── Step 10 ───
       - name: Login to ECR
-        if: github.event_name != 'pull_request'
+        if: github.ref_type == 'tag'
         id: login-ecr
         uses: aws-actions/amazon-ecr-login@v2
 
       # ─── Step 11 ───
       - name: Push to ECR
-        if: github.event_name != 'pull_request'
+        if: github.ref_type == 'tag'
         env:
           ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
           IMAGE_TAG: ${{ steps.image-tag.outputs.tag }}
