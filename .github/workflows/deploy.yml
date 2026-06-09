@@ -1,12 +1,10 @@
-name: CD - Build, Push and Deploy
+name: CD - Deploy to EKS
 
 on:
   workflow_run:
     workflows: ["CI - Build and Test"]
     types:
       - completed
-    branches:
-      - main
 
   workflow_dispatch:
     inputs:
@@ -17,119 +15,56 @@ on:
         type: choice
         options:
           - dev
-          - prod
 
 permissions:
   id-token: write
   contents: read
 
 jobs:
-  # ─────────────────────────────
-  # JOB 1: Docker Build + Scan
-  # ─────────────────────────────
-  docker-build-scan:
-    name: Docker Build and Security Scan
+  deploy-to-eks:
+    name: Deploy to EKS
     runs-on: ubuntu-latest
-    if: ${{ github.event.workflow_run.conclusion == 'success' || github.event_name == 'workflow_dispatch' }}
-
-    outputs:
-      image-tag: ${{ steps.image-tag.outputs.tag }}
+    environment: dev
+    if: ${{ github.event.workflow_run.conclusion == 'success'
+      || github.event_name == 'workflow_dispatch' }}
 
     steps:
+      # ─── Step 1 ───
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Generate Image Tag
+      # ─── Step 2 ───
+      - name: Get Image Tag
         id: image-tag
         run: |
           TAG=$(grep 'tag:' helm-chart/values.yaml | awk '{print $2}' | tr -d '"')
           echo "tag=${TAG}" >> $GITHUB_OUTPUT
-          echo "Image tag from values.yaml: ${TAG}"
+          echo "🏷️ Deploying tag: ${TAG}"
 
-      - name: Docker Build
-        run: |
-          docker build -t enrollment-service:${{ steps.image-tag.outputs.tag }} .
-          docker tag enrollment-service:${{ steps.image-tag.outputs.tag }} \
-            enrollment-service:latest
-
-      - name: Trivy Security Scan
-        uses: aquasecurity/trivy-action@master
-        with:
-          image-ref: enrollment-service:${{ steps.image-tag.outputs.tag }}
-          format: 'table'
-          exit-code: '0'
-          severity: 'CRITICAL,HIGH'
-
-  # ─────────────────────────────
-  # JOB 2: ECR Push
-  # ─────────────────────────────
-  ecr-push:
-    name: Push to ECR
-    runs-on: ubuntu-latest
-    needs: docker-build-scan
-
-    outputs:
-      image-tag: ${{ needs.docker-build-scan.outputs.image-tag }}
-
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-
+      # ─── Step 3 ───
       - name: Configure AWS credentials (OIDC)
         uses: aws-actions/configure-aws-credentials@v4
         with:
           role-to-assume: ${{ secrets.AWS_ROLE_ARN }}
           aws-region: ${{ secrets.AWS_REGION }}
 
-      - name: Login to ECR
-        id: login-ecr
-        uses: aws-actions/amazon-ecr-login@v2
-
-      - name: Build and Push to ECR
-        env:
-          ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
-          IMAGE_TAG: ${{ needs.docker-build-scan.outputs.image-tag }}
-        run: |
-          docker build -t $ECR_REGISTRY/devops-portfolio/enrollment-service:$IMAGE_TAG .
-          docker tag $ECR_REGISTRY/devops-portfolio/enrollment-service:$IMAGE_TAG \
-            $ECR_REGISTRY/devops-portfolio/enrollment-service:latest
-          docker push $ECR_REGISTRY/devops-portfolio/enrollment-service:$IMAGE_TAG
-          docker push $ECR_REGISTRY/devops-portfolio/enrollment-service:latest
-          echo "✅ Pushed: $ECR_REGISTRY/devops-portfolio/enrollment-service:$IMAGE_TAG"
-
-  # ─────────────────────────────
-  # JOB 3: Deploy to EKS
-  # ─────────────────────────────
-  deploy-to-eks:
-    name: Deploy to EKS
-    runs-on: ubuntu-latest
-    needs: ecr-push
-    environment: dev
-
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-
-      - name: Configure AWS credentials (OIDC)
-        uses: aws-actions/configure-aws-credentials@v4
-        with:
-          role-to-assume: ${{ secrets.AWS_ROLE_ARN }}
-          aws-region: ${{ secrets.AWS_REGION }}
-
+      # ─── Step 4 ───
       - name: Update kubeconfig
         run: |
           aws eks update-kubeconfig \
             --name devops-portfolio-dev \
             --region ${{ secrets.AWS_REGION }}
 
+      # ─── Step 5 ───
       - name: Setup Helm
         uses: azure/setup-helm@v3
         with:
           version: '3.17.0'
 
+      # ─── Step 6 ───
       - name: Deploy with Helm
         env:
-          IMAGE_TAG: ${{ needs.ecr-push.outputs.image-tag }}
+          IMAGE_TAG: ${{ steps.image-tag.outputs.tag }}
         run: |
           helm upgrade --install enrollment-service ./helm-chart \
             --namespace dev \
@@ -138,16 +73,10 @@ jobs:
             --set image.repository=${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.${{ secrets.AWS_REGION }}.amazonaws.com/devops-portfolio/enrollment-service \
             --timeout 10m
 
-#      - name: Wait for Deployment
-#        run: |
-#          kubectl rollout status deployment/enrollment-service -n dev --timeout=10m
-
+      # ─── Step 7 ───
       - name: Debug Pod Status
         if: always()
         run: |
-          aws eks update-kubeconfig \
-            --name devops-portfolio-dev \
-            --region ${{ secrets.AWS_REGION }}
           echo "=== Pods ==="
           kubectl get pods -n dev
           echo "=== Events ==="
@@ -155,10 +84,8 @@ jobs:
           echo "=== Logs ==="
           kubectl logs -n dev -l app.kubernetes.io/name=enrollment-service --tail=30 || true
 
+      # ─── Step 8 ───
       - name: Verify Deployment
         run: |
-          aws eks update-kubeconfig \
-            --name devops-portfolio-dev \
-            --region ${{ secrets.AWS_REGION }}
           kubectl get pods -n dev
           echo "✅ Enrollment-Service Deployed Successfully!"
