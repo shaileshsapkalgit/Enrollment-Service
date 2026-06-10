@@ -3,7 +3,7 @@ replicaCount: 2
 image:
   repository: 361697161922.dkr.ecr.us-east-1.amazonaws.com/devops-portfolio/enrollment-service
   pullPolicy: IfNotPresent
-  tag: "v1.1.3"
+  tag: "v1.1.5"
 
 serviceAccount:
   create: true
@@ -55,12 +55,11 @@ readinessProbe:
 
 autoscaling:
   enabled: true
-  minReplicas: 2
-  maxReplicas: 4
+  minReplicas: 2      # ← min 2 pods
+  maxReplicas: 3      # ← max 3 pods (4 → 3 changed!)
   targetCPUUtilizationPercentage: 70
   targetMemoryUtilizationPercentage: 90
 
-# ← NEW: PDB Configuration
 podDisruptionBudget:
   enabled: true
   minAvailable: 1
