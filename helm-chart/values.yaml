@@ -60,6 +60,11 @@ autoscaling:
   targetCPUUtilizationPercentage: 70
   targetMemoryUtilizationPercentage: 90
 
+# ← NEW: PDB Configuration
+podDisruptionBudget:
+  enabled: true
+  minAvailable: 1
+
 env:
   SPRING_PROFILES_ACTIVE: "dev"
   JAVA_OPTS: "-XX:+UseContainerSupport -XX:MaxRAMPercentage=75.0"
